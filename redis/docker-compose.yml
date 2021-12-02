@@ -1,0 +1,117 @@
+version: "3.5"
+
+networks:
+  uniclient-network:
+    name: uniclient-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.26.0.0/16
+
+services:
+  app-redis:
+    image: redis:6.2
+    restart: always
+    container_name: app-redis
+    volumes:
+      - ./redis:/usr/local/etc/redis
+    ports:
+      - 6379:6379
+    networks:
+      uniclient-network:
+        ipv4_address: 172.26.0.7
+    command:
+      [
+        'sh',
+        '-c',
+        'redis-server /usr/local/etc/redis/redis.conf'
+      ]
+  app-redis2:
+    image: redis:6.2
+    restart: always
+    container_name: app-redis2
+    volumes:
+      - ./redis:/usr/local/etc/redis
+    ports:
+      - 6380:6379
+    networks:
+      uniclient-network:
+        ipv4_address: 172.26.0.6
+    command:
+      [
+        'sh',
+        '-c',
+        'redis-server /usr/local/etc/redis/redis.conf'
+      ]
+
+  app-redis3:
+    image: redis:6.2
+    restart: always
+    container_name: app-redis3
+    volumes:
+      - ./redis:/usr/local/etc/redis
+    ports:
+      - 6381:6379
+    networks:
+      uniclient-network:
+        ipv4_address: 172.26.0.5
+    command:
+      [
+        'sh',
+        '-c',
+        'redis-server /usr/local/etc/redis/redis.conf'
+      ]
+  app-redis4:
+    image: redis:6.2
+    restart: always
+    container_name: app-redis4
+    volumes:
+      - ./redis:/usr/local/etc/redis
+    ports:
+      - 6382:6379
+    networks:
+      uniclient-network:
+        ipv4_address: 172.26.0.4
+    command:
+      [
+        'sh',
+        '-c',
+        'redis-server /usr/local/etc/redis/redis.conf'
+      ]
+
+  app-redis5:
+    image: redis:6.2
+    restart: always
+    container_name: app-redis5
+    volumes:
+      - ./redis:/usr/local/etc/redis
+    ports:
+      - 6383:6379
+    networks:
+      uniclient-network:
+        ipv4_address: 172.26.0.3
+    command:
+      [
+        'sh',
+        '-c',
+        'redis-server /usr/local/etc/redis/redis.conf'
+      ]
+
+  app-redis6:
+    image: redis:6.2
+    restart: always
+    container_name: app-redis6
+    volumes:
+      - ./redis:/usr/local/etc/redis
+    ports:
+      - 6384:6379
+    networks:
+      uniclient-network:
+        ipv4_address: 172.26.0.2
+
+    command:
+      [
+        'sh',
+        '-c',
+        'redis-server /usr/local/etc/redis/redis.conf'
+      ]

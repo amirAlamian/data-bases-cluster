@@ -1,0 +1,92 @@
+version: "3.5"
+
+networks:
+  uniclient-network:
+    name: uniclient-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.26.0.0/16
+
+volumes:
+  app-mysql-data:
+  
+services:
+  app-mysql:
+    container_name: app-mysql
+    restart: always
+    image: mysql:8.0.27
+    volumes:
+      - app-mysql-data:/data/db
+      # - ./MySQL:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=dsfsdf
+      - MYSQL_DATABASE=uniconsole
+    ports:
+      - 3306:3306
+    cap_add:
+      - SYS_NICE
+    networks:
+      uniclient-network:
+        ipv4_address: 172.26.0.8
+    command:
+      [
+        "--skip-replica-start=ON",
+        "--enforce-gtid-consistency=ON",
+        "--gtid-mode=ON",
+        "--replicate-same-server-id=0",
+        "--server_id=1234",
+        "--slave-parallel-workers=2"
+      ]
+  app-mysql2:
+    container_name: app-mysql2
+    restart: always
+    image: mysql:8.0.27
+    volumes:
+      - app-mysql-data:/data/db
+      # - ./MySQL:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=sdfsd
+      - MYSQL_DATABASE=uniconsole
+    ports:
+      - 3307:3306
+    cap_add:
+      - SYS_NICE
+    networks:
+      uniclient-network:
+        ipv4_address: 172.26.0.11
+    command:
+      [
+        "--skip-replica-start=ON",
+        "--enforce-gtid-consistency=ON",
+        "--gtid-mode=ON",
+        "--replicate-same-server-id=0",
+        "--server_id=1235",
+        "--slave-parallel-workers=2"
+      ]
+  app-mysql3:
+    container_name: app-mysql3
+    restart: always
+    image: mysql:8.0.27
+    volumes:
+      - app-mysql-data:/data/db
+      # - ./MySQL:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=dsfdsf
+      - MYSQL_DATABASE=uniconsole
+    ports:
+      - 3308:3306
+    cap_add:
+      - SYS_NICE
+    networks:
+      uniclient-network:
+        ipv4_address: 172.26.0.12
+    command:
+      [
+        "--skip-replica-start=ON",
+        "--enforce-gtid-consistency=ON",
+        "--gtid-mode=ON",
+        "--replicate-same-server-id=0",
+        "--server_id=1236",
+        "--slave-parallel-workers=2"
+      ]
